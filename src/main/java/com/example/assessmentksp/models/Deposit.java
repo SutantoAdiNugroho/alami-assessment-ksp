@@ -1,19 +1,16 @@
 package com.example.assessmentksp.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonIncludeProperties;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.Type;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 @Getter
 @Setter
@@ -33,9 +30,9 @@ public class Deposit implements Serializable {
     @Column(name = "balance", nullable = false)
     private Integer balance;
 
-    @JsonIgnore
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn( name = "member_id" )
+    @JsonIncludeProperties({"id", "firstName", "lastName"})
     private Member member;
 
     @Column(name = "created_at", updatable = false)

@@ -1,5 +1,6 @@
 package com.example.assessmentksp.repository;
 
+import com.example.assessmentksp.models.Deposit;
 import com.example.assessmentksp.models.DepositHistory;
 import com.example.assessmentksp.models.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -10,4 +11,6 @@ import java.util.List;
 @Repository
 public interface DepositHistoryRepository extends JpaRepository<DepositHistory, Long> {
     List<DepositHistory> findAllByMemberIdOrderByCreatedAtDesc(Long memberId);
+
+    List<DepositHistory> findAllByOrderByCreatedAtDesc();
 }

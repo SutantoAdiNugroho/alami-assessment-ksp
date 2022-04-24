@@ -11,12 +11,6 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 @EnableJpaAuditing
 public class AssessmentKspApplication {
 
-    @Autowired
-    private DepositRepository depositRepository;
-
-    @Autowired
-    private MemberRepository memberRepository;
-
     public static void main(String[] args) {
         SpringApplication.run(AssessmentKspApplication.class, args);
     }

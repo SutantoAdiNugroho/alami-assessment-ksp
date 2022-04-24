@@ -2,6 +2,7 @@ package com.example.assessmentksp.models;
 
 import com.example.assessmentksp.constants.TrxType;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIncludeProperties;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,6 +14,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -35,7 +37,7 @@ public class DepositHistory {
     private Integer taken;
 
     @ManyToOne()
-    @JsonIgnore
+    @JsonIncludeProperties({"id", "firstName", "lastName"})
     @JoinColumn(name = "member_id")
     private Member member;
 
@@ -49,6 +51,12 @@ public class DepositHistory {
     @Column(name = "trx_type", nullable = false)
     private String trxType;
 
+    @Column(name = "trx_date", nullable = false)
+    private LocalDate trxDate;
+
+    @Column(name = "description", nullable = false)
+    private String description;
+
     @Column(name = "created_at", updatable = false)
     @CreationTimestamp
     private LocalDateTime createdAt;
@@ -57,10 +65,12 @@ public class DepositHistory {
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 
-    public DepositHistory(Integer taken, Integer previousBalance, Integer remainingBalance, String trxType) {
+    public DepositHistory(Integer taken, Integer previousBalance, Integer remainingBalance, LocalDate trxDate, String trxType, String description) {
         this.taken = taken;
         this.previousBalance = previousBalance;
         this.remainingBalance = remainingBalance;
+        this.trxDate = trxDate;
         this.trxType = trxType.toString();
+        this.description = description;
     }
 }

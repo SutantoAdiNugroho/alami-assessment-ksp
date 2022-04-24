@@ -17,7 +17,7 @@ public class RegistrationMemberDto {
     private final String lastName;
 
     @NotEmpty
-        private final String dob;
+    private final String dob;
 
     @NotEmpty
     private final String address;
