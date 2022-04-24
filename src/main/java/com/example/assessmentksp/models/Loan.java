@@ -1,21 +1,15 @@
 package com.example.assessmentksp.models;
 
-import com.example.assessmentksp.constants.LoanStatus;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonIncludeProperties;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.Type;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
-import javax.persistence.criteria.CriteriaBuilder;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 @Getter
 @Setter
@@ -35,14 +29,14 @@ public class Loan {
     @Column(name = "amount", nullable = false)
     private Integer amount;
 
+    @Size(max = 7)
+    @Column(name = "status", nullable = false)
+    private String loanStatus;
+
     @JsonIncludeProperties({"id", "firstName", "lastName"})
     @ManyToOne
     @JoinColumn(name = "member_id")
     private Member member;
-
-    @Size(max = 7)
-    @Column(name = "status", nullable = false)
-    private String loanStatus;
 
     @Column(name = "created_at", updatable = false)
     @CreationTimestamp

@@ -12,12 +12,14 @@ import java.util.Locale;
 @Component
 public class DateFormatter {
 
-    public LocalDate trxDateFormatter(String date) {
+    public LocalDate trxDateFormatter(String date, Boolean isUsingValidation) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.ENGLISH);
         LocalDate trxDate = LocalDate.parse(date, formatter);
 
-        if (trxDate.isAfter(LocalDate.now())) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "trx_date cannot exceed the current date");
+        if (isUsingValidation) {
+            if (trxDate.isAfter(LocalDate.now())) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "trx_date cannot exceed the current date");
+            }
         }
 
         return trxDate;

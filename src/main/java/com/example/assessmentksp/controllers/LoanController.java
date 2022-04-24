@@ -1,6 +1,5 @@
 package com.example.assessmentksp.controllers;
 
-import com.example.assessmentksp.services.DepositService;
 import com.example.assessmentksp.services.LoanService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;

@@ -10,13 +10,18 @@ import com.example.assessmentksp.repository.DepositHistoryRepository;
 import com.example.assessmentksp.repository.DepositRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import javax.persistence.criteria.Predicate;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @AllArgsConstructor
@@ -54,7 +59,7 @@ public class DepositService {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, String.format("Deposit with member_id %s not found", request.getMemberId()));
         }
 
-        LocalDate trxDate = dateFormatter.trxDateFormatter(request.getTrxDate());
+        LocalDate trxDate = dateFormatter.trxDateFormatter(request.getTrxDate(), true);
 
         switch (request.getTrxType()) {
             case TrxType.TAKE:
@@ -96,8 +101,31 @@ public class DepositService {
         return BaseResponse.successResponse(message, HttpStatus.OK, "deposit_funds");
     }
 
-    public ResponseEntity<Object> getAllDepositHistories() {
-        List<DepositHistory> deposit = depositHistoryRepository.findAllByOrderByCreatedAtDesc();
+    public ResponseEntity<Object> getAllDepositHistories(Map<String,String> map) {
+        // Find with dynamically query, currently acceptance params is [fromTrxDate, toTrxDate, memberId, fromCreatedAt, toCreatedAt]
+        List<DepositHistory> deposit = depositHistoryRepository.findAll((Specification<DepositHistory>) (root, cq, cb) -> {
+            Predicate predicate = cb.conjunction();
+            if (map != null) {
+                if (map.get("fromTrxDate") != null && map.get("toTrxDate") != null) {
+                    LocalDate fromTrxDate = dateFormatter.trxDateFormatter(map.get("fromTrxDate"), false);
+                    LocalDate toTrxDate = dateFormatter.trxDateFormatter(map.get("toTrxDate"), false);
+                    if (!fromTrxDate.isAfter(toTrxDate)) {
+                        predicate = cb.and(predicate, cb.between(root.get("trxDate"), fromTrxDate, toTrxDate));
+                    }
+                } else if (map.get("memberId") != null) {
+                    predicate = cb.and(predicate, cb.equal(root.get("member"), Long.parseLong(map.get("memberId"))));
+                } else if (map.get("fromCreatedAt") != null && map.get("toCreatedAt") != null) {
+                    LocalDateTime fromCreatedAt = dateFormatter.trxDateFormatter(map.get("fromCreatedAt"), false).atStartOfDay();
+                    LocalDateTime toCreatedAt = dateFormatter.trxDateFormatter(map.get("toCreatedAt"), false).atTime(LocalTime.MAX);
+                    if (!fromCreatedAt.isAfter(toCreatedAt)) {
+                        predicate = cb.and(predicate, cb.between(root.get("createdAt"), fromCreatedAt, toCreatedAt));
+                    }
+                }
+            }
+
+            cq.orderBy(cb.desc(root.get("createdAt")));
+            return predicate;
+        });
         return BaseResponse.successResponse(String.format("Show deposit histories summary"), HttpStatus.OK, deposit);
     }
 }

@@ -1,22 +1,17 @@
 package com.example.assessmentksp.models;
 
-import com.example.assessmentksp.constants.TrxType;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIncludeProperties;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.Type;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 @Getter
 @Setter
@@ -36,11 +31,6 @@ public class DepositHistory {
     @Column(name = "taken", nullable = false)
     private Integer taken;
 
-    @ManyToOne()
-    @JsonIncludeProperties({"id", "firstName", "lastName"})
-    @JoinColumn(name = "member_id")
-    private Member member;
-
     @Column(name = "previous_balance", nullable = false)
     private Integer previousBalance;
 
@@ -54,8 +44,14 @@ public class DepositHistory {
     @Column(name = "trx_date", nullable = false)
     private LocalDate trxDate;
 
+    @Size(max = 100)
     @Column(name = "description", nullable = false)
     private String description;
+
+    @ManyToOne()
+    @JsonIncludeProperties({"id", "firstName", "lastName"})
+    @JoinColumn(name = "member_id")
+    private Member member;
 
     @Column(name = "created_at", updatable = false)
     @CreationTimestamp

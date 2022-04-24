@@ -1,7 +1,6 @@
 package com.example.assessmentksp.controllers;
 
 import com.example.assessmentksp.dto.deposit.DepositHistoryDto;
-import com.example.assessmentksp.dto.loan.GetLoansDto;
 import com.example.assessmentksp.dto.loan.LoanPaymentDto;
 import com.example.assessmentksp.dto.loan.RegistrationLoanDto;
 import com.example.assessmentksp.services.DepositService;
@@ -11,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Map;
 
 @RestController
 @RequestMapping(path = "/api/v1/trx")
@@ -21,8 +21,8 @@ public class TransactionController {
 
 
     @GetMapping("/deposit")
-    public ResponseEntity<Object> showDepositHistories() {
-        return depositService.getAllDepositHistories();
+    public ResponseEntity<Object> showDepositHistories(@RequestParam(required = false)Map<String,String> map) {
+        return depositService.getAllDepositHistories(map);
     }
 
     @PostMapping("/deposit")
@@ -31,8 +31,8 @@ public class TransactionController {
     }
 
     @GetMapping("/loan")
-    public ResponseEntity<Object> showLoanHistories() {
-        return loanService.getAllLoanHistories();
+    public ResponseEntity<Object> showLoanHistories(@RequestParam(required = false)Map<String,String> map) {
+        return loanService.getAllLoanHistories(map);
     }
 
     @PostMapping("/loan")

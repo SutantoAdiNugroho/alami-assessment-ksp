@@ -30,18 +30,8 @@ public class LoanHistory {
     @Column(name = "taken", nullable = false)
     private Integer taken;
 
-    @JsonIncludeProperties({"id", "firstName", "lastName"})
-    @ManyToOne
-    @JoinColumn(name = "member_id")
-    private Member member;
-
     @Column(name = "remaining_amt", nullable = false)
     private Integer remainingAmount;
-
-    @JsonIncludeProperties({"id", "status"})
-    @ManyToOne
-    @JoinColumn(name = "loan_id")
-    private Loan loan;
 
     @Size(max = 7)
     @Column(name = "status", nullable = false)
@@ -50,8 +40,19 @@ public class LoanHistory {
     @Column(name = "trx_date", nullable = false)
     private LocalDate trxDate;
 
+    @Size(max = 100)
     @Column(name = "description", nullable = false)
     private String description;
+
+    @JsonIncludeProperties({"id", "firstName", "lastName"})
+    @ManyToOne
+    @JoinColumn(name = "member_id")
+    private Member member;
+
+    @JsonIncludeProperties({"id", "loanStatus"})
+    @ManyToOne
+    @JoinColumn(name = "loan_id")
+    private Loan loan;
 
     @Column(name = "created_at", updatable = false)
     @CreationTimestamp
