@@ -1,7 +1,7 @@
 ## Deposit and Installment Rest API
 
-A simple rest api for Alami technical test assesment.
-Related ERD design can be found at [here.](https://drive.google.com/file/d/1rqgQQqWPPYn50BVTk2Ip4HFJtX5z1bBx/view?usp=sharing)
+A simple rest api for Alami technical test assesment. \
+ERD design of this application can be found at [here.](https://drive.google.com/file/d/1rqgQQqWPPYn50BVTk2Ip4HFJtX5z1bBx/view?usp=sharing)
 
 ### Dokumentasi API :
 
@@ -24,14 +24,15 @@ Related ERD design can be found at [here.](https://drive.google.com/file/d/1rqgQ
     | dob         | string   | Tanggal lahir anggota, dengan format yyyy-MM-dd  |
     | address     | string   | Alamat dari anggota  |
     
-    * Contoh response
+  * Contoh response
+    ![Alt text](./src/assets/01-register.png "Calling '/api/v1/registration' route")
 
 #### 2. Menampilkan daftar anggota
-  * Path : /api/v1/registration
+  * Path : /api/v1/members
   * Method     : GET
   * Parameter : Tidak tersedia
   * Contoh response
-
+    ![Alt text](./src/assets/02-members.png "Calling '/api/v1/registration' route")
 
 
 
@@ -48,7 +49,7 @@ Related ERD design can be found at [here.](https://drive.google.com/file/d/1rqgQ
 | /api/v1/trx/loan/payment  | POST   | Digunakan untuk pembayaran pinjaman    |
 
 
-#### 1. Menampilkan daftar dana simpanan anggota
+#### 1. Menampilkan daftar data simpanan anggota
   * Path : /api/v1/deposit
   * Method     : GET
   * Params :
@@ -57,7 +58,8 @@ Related ERD design can be found at [here.](https://drive.google.com/file/d/1rqgQ
     | ---         | -----    | ----              |
     | memberId    | string   | Untuk memfilter daftar dana simpanan berdasarkan id anggota  |
     
-   * Contoh response
+  * Contoh response
+    ![Alt text](./src/assets/03-deposits.png "Calling '/api/v1/registration' route")
 
 
 #### 2. Menampilkan data simpanan berdasarkan ID
@@ -70,7 +72,7 @@ Related ERD design can be found at [here.](https://drive.google.com/file/d/1rqgQ
     | id          | long     | Untuk spesifik menampilkan data simpanan berdasarikan id simpanan  |
     
    * Contoh response
-
+     ![Alt text](./src/assets/03-deposits-id.png "Calling '/api/v1/registration' route")
 
 #### 3. Menampilkan daftar data pinjaman anggota
   * Path : /api/v1/loan
@@ -81,7 +83,8 @@ Related ERD design can be found at [here.](https://drive.google.com/file/d/1rqgQ
     | ---         | -----    | ----              |
     | memberId    | string   | Untuk memfilter daftar pinjaman berdasarkan id anggota  |
     
-   * Contoh response
+  * Contoh response
+    ![Alt text](./src/assets/04-loans.png "Calling '/api/v1/loan' route")
 
 #### 4. Menampilkan data pinjaman berdasarkan ID
   * Path : /api/v1/loan/:id
@@ -92,7 +95,8 @@ Related ERD design can be found at [here.](https://drive.google.com/file/d/1rqgQ
     | ---         | -----    | ----              |
     | id          | string   | Untuk spesifik menampilkan data pinjaman berdasarikan id pinjaman  |
     
-   * Contoh response
+  * Contoh response
+    ![Alt text](./src/assets/04-loans-id.png "Calling '/api/v1/loan/:id' route")
 
 #### 5. Menyimpan atau mengambil dana simpanan
   * Path : /api/v1/trx/deposit
@@ -101,12 +105,13 @@ Related ERD design can be found at [here.](https://drive.google.com/file/d/1rqgQ
 
     | Name        | Tipe     | Deskripsi       |
     | ---         | -----    | ----              |
-    | taken       | int      | Sebagai nilai untuk menyimpan atau mengambil dana, misalkan 500000  |
+    | taken       | int      | Sebagai nilai untuk menyimpan atau mengambil dana, misalkan `500000`  |
     | memberId    | string   | Merupakan id anggota yang akan melakukan transaksi tersebut  |
     | trxType     | string   | Sebagai penanda bahwa itu untuk penyimpanan atau pengambilan dana, gunakan value `ADD` untuk menyimpan dana atau `TAKEN` untuk mengambil dana |
     | trxDate     | string   | Tanggal dilakukannya transaksi tersebut, bernilai `yyyy-MM-dd`  |
     
-   * Contoh response
+  * Contoh response
+    ![Alt text](./src/assets/05-deposit-save.png "Calling '/api/v1/trx/deposit' route")
 
 #### 6. Melakukan pinjaman dana
   * Path : /api/v1/trx/loan
@@ -115,11 +120,12 @@ Related ERD design can be found at [here.](https://drive.google.com/file/d/1rqgQ
 
     | Name        | Tipe     | Deskripsi       |
     | ---         | -----    | ----              |
-    | amount      | int      | Jumlah dana yang akan dipinjam, misalkan 1000000  |
+    | amount      | int      | Jumlah dana yang akan dipinjam, misalkan `1000000`  |
     | memberId    | string   | Merupakan id anggota yang akan melakukan transaksi tersebut  |
     | trxDate     | string   | Tanggal dilakukannya transaksi tersebut, bernilai `yyyy-MM-dd`  |
     
-   * Contoh response
+  * Contoh response
+    ![Alt text](./src/assets/06-loan-save.png "Calling '/api/v1/trx/loan' route")
 
 #### 7. Melakukan pembayaran pada pinjaman
   * Path : /api/v1/trx/loan/payment
@@ -132,7 +138,8 @@ Related ERD design can be found at [here.](https://drive.google.com/file/d/1rqgQ
     | loanId      | string   | Merupakan id dari pinjaman yang akan dibayarkan tersebut  |
     | trxDate     | string   | Tanggal dilakukannya transaksi tersebut, bernilai `yyyy-MM-dd`  |
     
-   * Contoh response
+  * Contoh response
+    ![Alt text](./src/assets/07-loan-payment.png "Calling '/api/v1/trx/loan/payment' route")
 
 #### Daftar API yang digunakan untuk melihat history transaksi
 
@@ -154,7 +161,9 @@ Related ERD design can be found at [here.](https://drive.google.com/file/d/1rqgQ
     | fromCreatedAt | string   | Untuk memfilter range awal dari tanggal dibuatnya data transaksi, bernilai `yyyy-MM-dd` |
     | toTrxDate   | string   | Untuk memfilter range akhir dari tanggal dibuatnya data transaksi, bernilai `yyyy-MM-dd`  |
     
-   * Contoh response
+  * Contoh response
+    ![Alt text](./src/assets/08-deposit-histories.png "Calling '/api/v1/trx/deposit' route")
+  * ![Alt text](./src/assets/08-deposit-histories-02.png "Calling '/api/v1/trx/deposit' route")
 
 #### 2. Menampilkan daftar riwayat transaksi pinjaman
   * Path : /api/v1/trx/loan
@@ -169,4 +178,6 @@ Related ERD design can be found at [here.](https://drive.google.com/file/d/1rqgQ
     | fromCreatedAt | string   | Untuk memfilter range awal dari tanggal dibuatnya data transaksi, bernilai `yyyy-MM-dd` |
     | toTrxDate   | string   | Untuk memfilter range akhir dari tanggal dibuatnya data transaksi, bernilai `yyyy-MM-dd`  |
     
-   * Contoh response
+  * Contoh response
+    ![Alt text](./src/assets/09-loan-histories.png "Calling '/api/v1/trx/deposit' route")
+* ![Alt text](./src/assets/09-loan-histories-02.png "Calling '/api/v1/trx/deposit' route")

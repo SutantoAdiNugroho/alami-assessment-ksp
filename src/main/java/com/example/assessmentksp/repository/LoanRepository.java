@@ -14,7 +14,7 @@ public interface LoanRepository extends JpaRepository<Loan, Long> {
     @Query("FROM Loan l WHERE l.id = :id")
     Loan findByLoanId(@Param("id") Long id);
 
-    @Query("FROM Deposit d WHERE d.member.id = :memberId")
+    @Query("FROM Loan l WHERE l.member.id = :memberId")
     Loan findByMemberId(@Param("memberId") Long memberId);
 
     List<Loan> findAllByOrderByCreatedAtDesc();
