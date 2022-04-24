@@ -2,6 +2,7 @@ package com.example.assessmentksp.models;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Type;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
@@ -9,19 +10,19 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
-@Table(name = "loan_history")
+@Table(name = "loan_histories")
 public class LoanHistory {
     @Id
-    @GeneratedValue(generator = "UUID")
-    @GenericGenerator(
-            name = "UUID",
-            strategy = "org.hibernate.id.UUIDGenerator"
+    @GeneratedValue(generator = "loan_history_generator")
+    @SequenceGenerator(
+            name = "loan_history_generator",
+            sequenceName = "loan_history_sequence",
+            initialValue = 1000
     )
-    @Column(name = "id", updatable = false, nullable = false)
-    private UUID id;
+    private Integer id;
 
     @Column(name = "taken", nullable = false)
-    private Integer taken;
+    private Long taken;
 
     @ManyToOne
     @JoinColumn(name = "member_id")

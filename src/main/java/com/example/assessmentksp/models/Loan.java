@@ -3,6 +3,7 @@ package com.example.assessmentksp.models;
 import com.example.assessmentksp.constants.LoanStatus;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Type;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
@@ -10,16 +11,16 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
-@Table(name = "loan")
+@Table(name = "loans")
 public class Loan {
     @Id
-    @GeneratedValue(generator = "UUID")
-    @GenericGenerator(
-            name = "UUID",
-            strategy = "org.hibernate.id.UUIDGenerator"
+    @GeneratedValue(generator = "loan_generator")
+    @SequenceGenerator(
+            name = "loan_generator",
+            sequenceName = "loan_sequence",
+            initialValue = 1000
     )
-    @Column(name = "id", updatable = false, nullable = false)
-    private UUID id;
+    private Long id;
 
     @Column(name = "amount", nullable = false)
     private Integer amount;

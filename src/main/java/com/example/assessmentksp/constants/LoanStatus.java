@@ -1,5 +1,6 @@
 package com.example.assessmentksp.constants;
 
-public enum LoanStatus {
-    PAIDOFF, NOTPAID
+public final class LoanStatus {
+    public static final String PAIDOFF = "PAIDOFF";
+    public static final String NOTPAID = "NOTPAID";
 }
