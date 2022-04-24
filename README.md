@@ -1,6 +1,6 @@
 ## Deposit and Installment Rest API
 
-A simple rest api for Alami technical test assesment. \
+A project for Alami technical test assesment. \
 ERD design of this application can be found at [here.](https://drive.google.com/file/d/1rqgQQqWPPYn50BVTk2Ip4HFJtX5z1bBx/view?usp=sharing)
 
 ### Dokumentasi API :
